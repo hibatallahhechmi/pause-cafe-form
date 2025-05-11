@@ -1,28 +1,104 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <title>Menu Pause Café - Événement</title>
+  <meta charset="UTF-8">
+  <title>Menu Pause Café</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    h1 {
+      color: #333;
+    }
+    form {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    th, td {
+      padding: 15px;
+      text-align: center;
+    }
+    th {
+      background-color: #007bff;
+      color: white;
+    }
+    td {
+      background-color: #e9f5ff;
+    }
+    img {
+      height: 50px;
+    }
+  </style>
 </head>
 <body>
-    <h1>Choisissez votre menu pour la pause café</h1>
-    <form>
-        <label>Boisson chaude:</label><br>
-        <select name="boisson">
-            <option value="café">Café</option>
-            <option value="thé">Thé</option>
-            <option value="chocolat">Chocolat chaud</option>
-        </select><br><br>
+  <h1>Choisissez votre menu pour la pause café</h1>
+  <form id="menuForm">
+    <label>Boisson chaude:</label><br>
+    <select name="boisson" id="boisson">
+      <option value="café">Café</option>
+      <option value="thé">Thé</option>
+      <option value="chocolat">Chocolat chaud</option>
+    </select><br><br>
 
-        <label>Snack:</label><br>
-        <select name="snack">
-            <option value="croissant">Croissant</option>
-            <option value="painChocolat">Pain au chocolat</option>
-            <option value="biscuit">Biscuit</option>
-        </select><br><br>
+    <label>Snack:</label><br>
+    <select name="snack" id="snack">
+      <option value="croissant">Croissant</option>
+      <option value="painChocolat">Pain au chocolat</option>
+      <option value="biscuit">Biscuit</option>
+    </select><br><br>
 
-        <input type="submit" value="Valider">
-    </form>
+    <input type="submit" value="Valider">
+  </form>
+
+  <div id="resultat"></div>
+
+  <script>
+    const images = {
+      "café": "https://cdn-icons-png.flaticon.com/128/3047/3047925.png",
+      "thé": "https://cdn-icons-png.flaticon.com/128/590/590685.png",
+      "chocolat": "https://cdn-icons-png.flaticon.com/128/1046/1046784.png",
+      "croissant": "https://cdn-icons-png.flaticon.com/128/2738/2738716.png",
+      "painChocolat": "https://cdn-icons-png.flaticon.com/128/9343/9343821.png",
+      "biscuit": "https://cdn-icons-png.flaticon.com/128/1046/1046753.png"
+    };
+
+    document.getElementById("menuForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+      const boisson = document.getElementById("boisson").value;
+      const snack = document.getElementById("snack").value;
+
+      const html = `
+        <h2>Votre sélection :</h2>
+        <table>
+          <tr>
+            <th>Boisson</th>
+            <th>Snack</th>
+          </tr>
+          <tr>
+            <td>
+              ${boisson}<br>
+              <img src="${images[boisson]}" alt="${boisson}">
+            </td>
+            <td>
+              ${snack}<br>
+              <img src="${images[snack]}" alt="${snack}">
+            </td>
+          </tr>
+        </table>
+      `;
+      document.getElementById("resultat").innerHTML = html;
+    });
+  </script>
 </body>
 </html>
