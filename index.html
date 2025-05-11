@@ -6,126 +6,144 @@
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background-color: #f9f9f9;
-      padding: 20px;
+      background-color: #f4f4f4;
       text-align: center;
+      padding: 30px;
     }
     .container {
-      max-width: 600px;
+      background: white;
+      max-width: 800px;
       margin: auto;
-      background-color: #ffffff;
       padding: 30px;
       border-radius: 12px;
       box-shadow: 0 0 15px rgba(0,0,0,0.1);
     }
+    img.logo {
+      height: 100px;
+      margin-bottom: 10px;
+    }
     h1 {
-      color: #222;
-      margin-bottom: 5px;
-    }
-    h2 {
-      color: #007bff;
-    }
-    select, input[type="submit"] {
-      padding: 10px;
-      margin: 10px;
-      width: 80%;
-      font-size: 16px;
-    }
-    input[type="submit"] {
-      background-color: #007bff;
-      color: white;
-      border: none;
-      cursor: pointer;
-      border-radius: 5px;
-    }
-    input[type="submit"]:hover {
-      background-color: #0056b3;
+      color: #2c3e50;
     }
     table {
       width: 100%;
-      margin-top: 30px;
+      margin-top: 20px;
       border-collapse: collapse;
     }
     th, td {
       padding: 15px;
       text-align: center;
+      border-bottom: 1px solid #ddd;
     }
     th {
-      background-color: #28a745;
+      background-color: #007bff;
       color: white;
     }
-    td {
-      background-color: #eafbe7;
+    input[type="radio"] {
+      transform: scale(1.2);
     }
-    img {
-      height: 50px;
+    button {
+      margin-top: 20px;
+      padding: 12px 25px;
+      font-size: 16px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
     }
-    .logo {
-      height: 80px;
-      margin-bottom: 10px;
+    button:hover {
+      background-color: #218838;
+    }
+    .results {
+      margin-top: 30px;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <img src="https://cdn-icons-png.flaticon.com/512/2621/2621100.png" alt="Hackathon Logo" class="logo">
-    <h1>Hackathon Universitaire</h1>
-    <h2>Choisissez votre menu pour la pause café ☕</h2>
+    <img src="https://cdn-icons-png.flaticon.com/512/2621/2621100.png" class="logo" alt="Hackathon Logo">
+    <h1>Pause Café - Hackathon Universitaire</h1>
+    <p>Choisissez votre combinaison préférée :</p>
 
-    <form id="menuForm">
-      <select id="boisson">
-        <option value="café">☕ Café</option>
-        <option value="thé">🍵 Thé</option>
-        <option value="chocolat">🍫 Chocolat chaud</option>
-      </select><br>
-
-      <select id="snack">
-        <option value="croissant">🥐 Croissant</option>
-        <option value="painChocolat">🍫 Pain au chocolat</option>
-        <option value="biscuit">🍪 Biscuit</option>
-      </select><br>
-
-      <input type="submit" value="Valider">
+    <form id="cafeForm">
+      <table>
+        <tr>
+          <th>Type</th>
+          <th>Options</th>
+        </tr>
+        <tr>
+          <td>Boisson</td>
+          <td>
+            <label><input type="radio" name="boisson" value="Café"> Café ☕</label><br>
+            <label><input type="radio" name="boisson" value="Thé"> Thé 🍵</label><br>
+            <label><input type="radio" name="boisson" value="Chocolat"> Chocolat chaud 🍫</label>
+          </td>
+        </tr>
+        <tr>
+          <td>Snack</td>
+          <td>
+            <label><input type="radio" name="snack" value="Croissant Miel"> Croissant Miel 🥐</label><br>
+            <label><input type="radio" name="snack" value="Pain Chocolat"> Pain au chocolat 🍫</label><br>
+            <label><input type="radio" name="snack" value="Biscuit"> Biscuit 🍪</label>
+          </td>
+        </tr>
+      </table>
+      <button type="submit">Valider</button>
     </form>
 
-    <div id="resultat"></div>
+    <div class="results" id="results">
+      <!-- Résultat global ici -->
+    </div>
   </div>
 
   <script>
-    const images = {
-      "café": "https://cdn-icons-png.flaticon.com/128/3047/3047925.png",
-      "thé": "https://cdn-icons-png.flaticon.com/128/590/590685.png",
-      "chocolat": "https://cdn-icons-png.flaticon.com/128/1046/1046784.png",
-      "croissant": "https://cdn-icons-png.flaticon.com/128/2738/2738716.png",
-      "painChocolat": "https://cdn-icons-png.flaticon.com/128/9343/9343821.png",
-      "biscuit": "https://cdn-icons-png.flaticon.com/128/1046/1046753.png"
-    };
+    const form = document.getElementById('cafeForm');
+    const resultsDiv = document.getElementById('results');
 
-    document.getElementById("menuForm").addEventListener("submit", function(event) {
-      event.preventDefault();
-      const boisson = document.getElementById("boisson").value;
-      const snack = document.getElementById("snack").value;
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
 
-      const html = `
-        <h2>Votre sélection :</h2>
-        <table>
-          <tr>
-            <th>Boisson</th>
-            <th>Snack</th>
-          </tr>
-          <tr>
-            <td>
-              ${boisson}<br>
-              <img src="${images[boisson]}" alt="${boisson}">
-            </td>
-            <td>
-              ${snack}<br>
-              <img src="${images[snack]}" alt="${snack}">
-            </td>
-          </tr>
-        </table>
-      `;
-      document.getElementById("resultat").innerHTML = html;
+      const boisson = document.querySelector('input[name="boisson"]:checked')?.value;
+      const snack = document.querySelector('input[name="snack"]:checked')?.value;
+
+      if (!boisson || !snack) {
+        window.location.href = "merci.html";
+        return;
+      }
+
+      // Envoi vers Google Apps Script
+      await fetch('https://script.google.com/macros/s/AKfycbwMpN6FOnYdoVgfS8EdaMGIBWN4oz8wBFcGibtqWLA9YstHVH8B4BVUyyMErWhgaAcX/exec', {
+        method: 'POST',
+        body: JSON.stringify({ boisson, snack }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      alert("Merci ! Votre choix a été enregistré.");
+
+      // Récupération des données et calcul du total
+      fetch("https://docs.google.com/spreadsheets/d/1WMEq6hTvbQiWVKCD1_FTQzo0CdOfvDHLyS0U7fSutow/edit?gid=0#gid=0")
+        .then(response => response.text())
+        .then(csv => {
+          const lines = csv.trim().split('\n').slice(1); // skip header
+          const stats = {};
+
+          for (const line of lines) {
+            const [ , b, s ] = line.split(',');
+
+            stats[b] = (stats[b] || 0) + 1;
+            stats[s] = (stats[s] || 0) + 1;
+          }
+
+          let html = "<h3>Statistiques globales :</h3><ul>";
+          for (const item in stats) {
+            html += `<li><strong>${item}</strong> = ${stats[item]}</li>`;
+          }
+          html += "</ul>";
+          resultsDiv.innerHTML = html;
+        });
     });
   </script>
 </body>
